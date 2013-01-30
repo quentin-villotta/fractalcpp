@@ -4,9 +4,10 @@
 class FractalMandelbrot : public Fractal
 {
 public:
-	FractalMandelbrot(int, int);
+	FractalMandelbrot(int, int, int);
 	~FractalMandelbrot(void);
 
-	//virtual void generateFractal(void);
+	virtual void UpdateIter(complex<double>, complex<double>);
+	virtual void UpdateColor();
 };
 

@@ -16,15 +16,15 @@ class Fractal
 		complex<double> z_top_left, z_bottom_right; //Add z_top_left_old and z_bottom_right for dezooming feature
 
 		int width, height;
-	
+		int max_iter;
 		int* matrix_iter;
 		
 	public:
 		SDL_Surface* matrix_color;
 		
-		Fractal(int, int);
+		Fractal(int, int, int);
 		~Fractal(void);
 
-		//bool UpdateIter(new_z_top_left, new_z_bottom_right);
-		//bool UpdateColor();
+		virtual void UpdateIter(complex<double>, complex<double>) = 0;
+		virtual void UpdateColor() = 0;
 };
