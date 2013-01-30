@@ -1,5 +1,12 @@
 #pragma once
+
+#include <complex>
+#include <iostream>
+
 #include "Fractal.h"
+#include "SurfaceHelper.h"
+
+using namespace std;
 
 class FractalMandelbrot : public Fractal
 {
