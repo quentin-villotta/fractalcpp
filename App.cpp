@@ -10,7 +10,7 @@ App::App(int width, int height, int max_iter,
 	running = true;
 	
 	//TODO: add argument to App:App to specify fractal type (mandelbrot, julia, ...)
-	fractal = new FractalMandelbrot(width_display, height_display, max_iter,
+	fractal = new FractalJulia(width_display, height_display, max_iter,
 		z_top_left, z_bottom_right);
 	
 	fractal->UpdateIter();
@@ -42,9 +42,12 @@ int main(int argc, char* argv[])
 {
 	//parse conf file
 	
-	complex<double> z_top_left(-2.1, 1.2);
-	complex<double> z_bottom_right(0.6, -1.2);
+	//Mandelbrot centered
+	//complex<double> z_top_left(-2.1, 1.2);
+	//complex<double> z_bottom_right(0.6, -1.2);
 	
+	complex<double> z_top_left(-2.0, 2.0);
+	complex<double> z_bottom_right(2.0, -2.0);
 	App app(800, 710, 50, z_top_left, z_bottom_right);
 	
     return app.Execute();

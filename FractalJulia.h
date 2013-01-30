@@ -16,7 +16,7 @@ public:
     FractalJulia(int, int, int, complex<double>, complex<double>);
 	~FractalJulia(void);
 
-	//void UpdateIter(complex<double>, complex<double>, complex<double>);
-	//virtual void UpdateColor();
+	virtual void UpdateIter();
+	virtual void UpdateColor();
 };
 

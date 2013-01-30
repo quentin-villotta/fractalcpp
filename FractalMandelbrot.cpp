@@ -18,7 +18,7 @@ void FractalMandelbrot::UpdateIter()
 			complex<double> c(z_top_left.real() + x * (z_bottom_right.real() -
 				z_top_left.real()) / (width - 1), z_top_left.imag() + y *
 				(z_bottom_right.imag() - z_top_left.imag()) / (height - 1));
-			complex<double> z(0.0, 0.0);
+			complex<double> z = c;
 			int iterations;
 			
 			for(iterations = 0; iterations < max_iter && norm(z) < 4.0; iterations++)
