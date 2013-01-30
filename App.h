@@ -6,6 +6,9 @@
 #include "SDL.h"
 #endif
 
+#include "Fractal.h"
+#include "FractalMandelbrot.h"
+
 class App
 {
 	private:
@@ -14,10 +17,10 @@ class App
     	SDL_Surface* surf_display;
 		int width_display, height_display;
 		
-		//Fractal* F;
+		Fractal* fractal;
 		
 	public:
-    	App(int, int);
+    	App(int, int, int);
     	int Execute();
 
 	public:

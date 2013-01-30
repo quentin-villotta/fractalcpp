@@ -3,6 +3,6 @@
 void App::Cleanup()
 {
     SDL_FreeSurface(surf_display);
-	//Free other ressources here
+	delete fractal;
     SDL_Quit();
 }
