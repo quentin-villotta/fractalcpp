@@ -11,11 +11,11 @@ App::App(int width = 640, int height = 480, int max_iter = 100)
 	//TODO: add argument to App:App to specify fractal type (mandelbrot, julia, ...)
 	fractal = new FractalMandelbrot(width_display, height_display, max_iter);
 	
-	//TODO: 
-	//default value : complex<double> z_top_left(-2.1, 1.2);
-	//default value : <double> z_bottom_right(0.6, -1.2);
-	complex<double> z_top_left(-1.5, 0.33);
-	complex<double> z_bottom_right(-0.5, -0.33);
+	//TODO: add argument to App::App to specify the first view
+	complex<double> z_top_left(-2.1, 1.2);
+	complex<double> z_bottom_right(0.6, -1.2);
+	//complex<double> z_top_left(-1.5, 0.33);
+	//complex<double> z_bottom_right(-0.5, -0.33);
 	fractal->UpdateIter(z_top_left, z_bottom_right);
 	fractal->UpdateColor();
 }
