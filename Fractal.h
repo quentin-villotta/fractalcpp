@@ -1,3 +1,13 @@
+/**
+ * \class Fractal
+ *
+ * \brief This class is for storing a view of a fractal.
+ *
+ * This class computes and stores a part of a fractal defined by a rectangle 
+ * of the complex plane. More precisly it stores the number of iterations needed
+ * to be outside the fractal, and the corresponding colors in an SDL_Surface. 
+ *
+ */
 #pragma once
 
 #include <complex>
@@ -13,8 +23,8 @@ using namespace std;
 class Fractal
 {
 	protected:
-		complex<double> z_top_left, z_bottom_right; //Add z_top_left_old and z_bottom_right for dezooming feature
-
+		complex<double> z_top_left, z_bottom_right;
+		
 		int width, height;
 		int max_iter;
 		int* matrix_iter;
@@ -25,6 +35,9 @@ class Fractal
 		Fractal(int, int, int);
 		~Fractal(void);
 
+		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter(complex<double>, complex<double>) = 0;
+		
+		/// Colorize the fractal based on the number of iteration
 		virtual void UpdateColor() = 0;
 };

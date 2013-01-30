@@ -13,5 +13,4 @@ public:
 	~SurfaceHelper(void);
 	
 	static void PutPixelRGB(SDL_Surface*, int , int , Uint8, Uint8, Uint8);
-
 };

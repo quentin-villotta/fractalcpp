@@ -7,7 +7,8 @@ Fractal::Fractal(int _width, int _height, int _max_iter = 100)
 	max_iter = _max_iter;
 
 	matrix_iter = new int[width * height];
-	matrix_color = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, 0, 0, 0, 0);
+	matrix_color = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height,
+		32, 0, 0, 0, 0);
 }
 
 Fractal::~Fractal(void)
