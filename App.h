@@ -31,7 +31,7 @@ class App
 		Fractal* fractal;
 		
 	public:
-    	App(int, int, int);
+    	App(int, int, int, complex<double>, complex<double>);
 		
 		/// Run the application
     	int Execute();

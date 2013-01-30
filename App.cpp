@@ -1,6 +1,7 @@
 #include "App.h"
 
-App::App(int width = 640, int height = 480, int max_iter = 100)
+App::App(int width, int height, int max_iter, 
+	complex<double> z_top_left, complex<double> z_bottom_right)
 {
 	surf_display = NULL;
 	width_display = width;
@@ -9,17 +10,10 @@ App::App(int width = 640, int height = 480, int max_iter = 100)
 	running = true;
 	
 	//TODO: add argument to App:App to specify fractal type (mandelbrot, julia, ...)
-	fractal = new FractalMandelbrot(width_display, height_display, max_iter);
-
-	//complex<double> orbit(0.72, 0.11);
-	//fractal = new FractalJulia(width_display, height_display, max_iter, orbit);
+	fractal = new FractalMandelbrot(width_display, height_display, max_iter,
+		z_top_left, z_bottom_right);
 	
-	//TODO: add argument to App::App to specify the first view
-	complex<double> z_top_left(-2.1, 1.2);
-	complex<double> z_bottom_right(0.6, -1.2);
-	//complex<double> z_top_left(-1.5, 0.33);
-	//complex<double> z_bottom_right(-0.5, -0.33);
-	fractal->UpdateIter(z_top_left, z_bottom_right);
+	fractal->UpdateIter();
 	fractal->UpdateColor();
 }
 
@@ -47,6 +41,11 @@ int App::Execute()
 int main(int argc, char* argv[])
 {
 	//parse conf file
-	App app(800, 710, 50);
+	
+	complex<double> z_top_left(-2.1, 1.2);
+	complex<double> z_bottom_right(0.6, -1.2);
+	
+	App app(800, 710, 50, z_top_left, z_bottom_right);
+	
     return app.Execute();
 }

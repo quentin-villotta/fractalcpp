@@ -32,11 +32,14 @@ class Fractal
 	public:
 		SDL_Surface* matrix_color;
 		
-		Fractal(int, int, int);
+		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
 
+		/// TODO
+		//ChangeView(complex<double> z_top_left, complex<double> z_bottom_right)
+		
 		/// Compute a new view of the fractal given a rectangle
-		virtual void UpdateIter(complex<double>, complex<double>) = 0;
+		virtual void UpdateIter() = 0;
 		
 		/// Colorize the fractal based on the number of iteration
 		virtual void UpdateColor() = 0;
