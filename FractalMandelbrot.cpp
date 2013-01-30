@@ -22,7 +22,7 @@ void FractalMandelbrot::UpdateIter(complex<double> z_top_left_new, complex<doubl
 				z = z * z + c;
 			
 			matrix_iter[y * width + x] = iterations;
-		}	
+		}
 }
 
 void FractalMandelbrot::UpdateColor()
