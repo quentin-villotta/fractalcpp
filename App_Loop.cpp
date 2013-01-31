@@ -2,5 +2,7 @@
 
 void App::Loop()
 {
-	//Do computations here
+	//This is just for testing Fractal::ChangeView()
+	
+	SDL_Delay(3000);
 }
