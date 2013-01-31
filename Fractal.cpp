@@ -21,3 +21,16 @@ Fractal::~Fractal(void)
 	delete [] matrix_iter;
 	SDL_FreeSurface(matrix_color);
 }
+
+SDL_Surface* Fractal::getMatrixColor(void)
+{
+	return matrix_color;
+}
+
+int Fractal::CalculateNbIterations (complex<double> z, complex<double> orbit)
+{
+	int iterations;
+	for(iterations = 0; iterations < max_iter && norm(z) < 4.0; iterations++)
+		z = z * z + orbit;
+	return iterations;
+}

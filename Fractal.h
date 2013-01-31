@@ -24,19 +24,25 @@ class Fractal
 {
 	protected:
 		complex<double> z_top_left, z_bottom_right;
-		
+		complex<double> orbit;
+
 		int width, height;
 		int max_iter;
+		
 		int* matrix_iter;
-		
-	public:
 		SDL_Surface* matrix_color;
-		
+
+	public:
+				
 		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
+		SDL_Surface* getMatrixColor(void);
 
 		/// TODO
 		//ChangeView(complex<double> z_top_left, complex<double> z_bottom_right)
+
+		/// Compute the number of iteration required for a serie starting at z0 with orbit c
+		int CalculateNbIterations (complex<double>, complex<double>);
 		
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
