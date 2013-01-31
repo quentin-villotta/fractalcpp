@@ -38,7 +38,7 @@ class Fractal
 		SDL_Surface* getMatrixColor(void);
 
 		/// TODO
-		//ChangeView(complex<double> z_top_left, complex<double> z_bottom_right)
+		void ChangeView(complex<double>, complex<double>);
 
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
 		int CalculateNbIterations (complex<double>, complex<double>);
