@@ -1,6 +1,5 @@
 #pragma once
 #include "Fractal.h"
-#include "SurfaceHelper.h"
 
 #include <complex>
 
@@ -15,6 +14,5 @@ class FractalJulia : public Fractal
 
 	private:
 		virtual void UpdateIter();
-		virtual void UpdateColor();
 };
 

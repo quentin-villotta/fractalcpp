@@ -18,6 +18,8 @@
 #include "SDL.h"
 #endif
 
+#include "SurfaceHelper.h"
+
 using namespace std;
 
 class Fractal
@@ -31,7 +33,13 @@ class Fractal
 		
 		int* matrix_iter;
 		SDL_Surface* matrix_color;
+		
+		/// Colorize the fractal based on the number of iteration
+		virtual void UpdateColor();
 
+		/// Compute a new view of the fractal given a rectangle
+		virtual void UpdateIter() = 0;
+		
 	public:	
 		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
@@ -42,11 +50,4 @@ class Fractal
 
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
 		int CalculateNbIterations (complex<double>, complex<double>);
-	
-	private:
-		/// Compute a new view of the fractal given a rectangle
-		virtual void UpdateIter() = 0;
-		
-		/// Colorize the fractal based on the number of iteration
-		virtual void UpdateColor() = 0;
 };

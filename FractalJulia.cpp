@@ -30,24 +30,3 @@ void FractalJulia::UpdateIter()
 			matrix_iter[y * width + x] = CalculateNbIterations(z, orbit);
 		}
 }
-
-void FractalJulia::UpdateColor()
-{
-	for(int x = 0; x < width; x++)
-	{
-		for(int y = 0; y < height; y++)
-		{
-			int iter = matrix_iter[y * width + x];
-			
-			//if (x,y) belongs to Julia's set
-			if(iter == max_iter)
-				SurfaceHelper::PutPixelRGB(matrix_color, x, y, 0, 0, 0);
-			else
-			{
-				double rate_iter = (double) (iter) / (double) max_iter;
-				Uint8 color_code = (Uint8) (255.0 * rate_iter);
-				SurfaceHelper::PutPixelRGB(matrix_color, x, y, color_code, color_code, color_code);
-			}
-		}
-	}	
-}

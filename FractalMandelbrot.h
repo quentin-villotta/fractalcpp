@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "Fractal.h"
-#include "SurfaceHelper.h"
 
 using namespace std;
 
@@ -16,6 +15,5 @@ class FractalMandelbrot : public Fractal
 
 	private:
 		virtual void UpdateIter();
-		virtual void UpdateColor();
 };
 
