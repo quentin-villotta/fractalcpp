@@ -9,7 +9,7 @@ using namespace std;
 class FractalJulia : public Fractal
 {
 protected:
-	complex<double> orbit;
+	
 
 public:
 	//TODO : add orbit as argument to constructor
