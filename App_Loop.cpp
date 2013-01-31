@@ -2,7 +2,9 @@
 
 void App::Loop()
 {
-	//This is just for testing Fractal::ChangeView()
+	//Auto-zoom
+	//SDL_Delay(100);
+	//complex<double> hippo(-0.743643, 0.13182590);
+	//fractal->ZoomView(hippo, 0.80);
 	
-	SDL_Delay(3000);
 }
