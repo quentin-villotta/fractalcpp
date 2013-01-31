@@ -11,10 +11,7 @@ App::App(int width, int height, int max_iter,
 	
 	//TODO: add argument to App:App to specify fractal type (mandelbrot, julia, ...)
 	fractal = new FractalJulia(width_display, height_display, max_iter,
-		z_top_left, z_bottom_right);
-	
-	fractal->UpdateIter();
-	fractal->UpdateColor();
+		z_top_left, z_bottom_right);	
 }
 
 int App::Execute()

@@ -4,6 +4,8 @@ FractalMandelbrot::FractalMandelbrot(int _width, int _height, int _max_iter,
 	complex<double> _z_top_left, complex<double> _z_bottom_right) :
 	Fractal(_width, _height, _max_iter, _z_top_left, _z_bottom_right)
 {
+	UpdateIter();
+	UpdateColor();
 }
 
 FractalMandelbrot::~FractalMandelbrot(void)

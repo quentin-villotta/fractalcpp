@@ -32,8 +32,7 @@ class Fractal
 		int* matrix_iter;
 		SDL_Surface* matrix_color;
 
-	public:
-				
+	public:	
 		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
 		SDL_Surface* getMatrixColor(void);
@@ -43,7 +42,8 @@ class Fractal
 
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
 		int CalculateNbIterations (complex<double>, complex<double>);
-		
+	
+	private:
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
 		

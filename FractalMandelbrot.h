@@ -10,11 +10,12 @@ using namespace std;
 
 class FractalMandelbrot : public Fractal
 {
-public:
-	FractalMandelbrot(int, int, int, complex<double>, complex<double>);
-	~FractalMandelbrot(void);
+	public:
+		FractalMandelbrot(int, int, int, complex<double>, complex<double>);
+		~FractalMandelbrot(void);
 
-	virtual void UpdateIter();
-	virtual void UpdateColor();
+	private:
+		virtual void UpdateIter();
+		virtual void UpdateColor();
 };
 
