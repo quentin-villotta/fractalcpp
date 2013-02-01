@@ -10,7 +10,7 @@ FractalJulia::FractalJulia(int _width, int _height, int _max_iter,
 	//orbit = complex<double>(0.4, 0.6);
 	//orbit = complex<double>(0.8, 0.156);
 	UpdateIter();
-	UpdateColor();
+	UpdateColor( );
 }
 
 
@@ -23,10 +23,9 @@ void FractalJulia::UpdateIter()
 	for(int x = 0; x < width; x++)
 		for(int y = 0; y < height; y++)
 		{
-			complex<double> z (z_top_left.real() + x * (z_bottom_right.real() -
-				z_top_left.real()) / (width - 1), z_top_left.imag() + y *
-				(z_bottom_right.imag() - z_top_left.imag()) / (height - 1));
+			complex<double> z = GetComplexFromPixel(x, y);
 			
 			matrix_iter[y * width + x] = CalculateNbIterations(z, orbit);
+			matrix_lastTerm[y * width + x] = z;
 		}
 }
