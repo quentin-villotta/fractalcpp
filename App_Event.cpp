@@ -35,15 +35,9 @@ void App::Event(SDL_Event* event)
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)
 		{
-			//TODO
-			/*
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
-			
-			complex<double> new_z_top_left = fractal->GetComplexFromPixel(
-				);
-			complex<double> new_z_bottom_right = ;
-			*/
+			fractal->ZoomView(new_center, 0.0);
 		}
 		
 	}
