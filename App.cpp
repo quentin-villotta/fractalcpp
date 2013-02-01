@@ -11,7 +11,7 @@ App::App(int width, int height, int max_iter,
 	
 	zoom_scale = _zoom_scale;
 	
-	last_mouse_click = make_pair(0, 0);
+	last_mouse_click = make_pair(width / 2, height / 2);
 	
 	//TODO: add argument to App:App to specify fractal type (mandelbrot, julia, ...)
 	fractal = new FractalMandelbrot(width_display, height_display, max_iter,
