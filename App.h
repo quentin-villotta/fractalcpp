@@ -12,10 +12,14 @@
 #include "SDL.h"
 #endif
 
+#include <utility>
+	 
 #include "Fractal.h"
 #include "FractalMandelbrot.h"
 #include "FractalJulia.h"
 
+using namespace std;
+ 
 class App
 {
 	private:
@@ -30,8 +34,14 @@ class App
 		/// Current view of the fractal
 		Fractal* fractal;
 		
+		/// Last position of mouse click
+		pair<int, int> last_mouse_click;
+		
+		/// Zoom scale
+		double zoom_scale;
+		
 	public:
-    	App(int, int, int, complex<double>, complex<double>);
+    	App(int, int, int, complex<double>, complex<double>, double);
 		
 		/// Run the application
     	int Execute();
