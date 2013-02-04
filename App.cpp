@@ -122,6 +122,7 @@ int main(int argc, char* argv[])
 	// Julia
 	//complex<double> z_top_left(-2.0, 2.0);
 	//complex<double> z_bottom_right(2.0, -2.0);
+	//orbit = complex<double>(0.285, 0.01)
 	
 	App app(800, 710, 50, z_top_left, z_bottom_right, zoom_scale);
 	
