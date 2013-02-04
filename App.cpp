@@ -18,6 +18,33 @@ App::App(int width, int height, int max_iter,
 		z_top_left, z_bottom_right);	
 }
 
+bool App::Init()
+{
+    if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+        return false;
+	
+	surf_display = SDL_SetVideoMode(width_display, height_display, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	if(surf_display == NULL)
+		return false;
+
+	//Load other ressources here
+	
+    return true;
+}
+
+void App::Cleanup()
+{
+    SDL_FreeSurface(surf_display);
+	delete fractal;
+    SDL_Quit();
+}
+
+void App::Render()
+{
+	SDL_BlitSurface(fractal->getMatrixColor(), NULL, surf_display, NULL);
+	SDL_Flip(surf_display);
+}
+
 int App::Execute()
 {
     if(Init() == false)
@@ -30,13 +57,56 @@ int App::Execute()
         while(SDL_PollEvent(&event))
             Event(&event);
 
-        Loop();
         Render();
     }
 
     Cleanup();
 
     return 0;
+}
+
+void App::Event(SDL_Event* event)
+{
+    if(event->type == SDL_QUIT)
+        running = false;
+	if(event->type == SDL_MOUSEBUTTONDOWN)
+	{
+		if(event->button.button == SDL_BUTTON_LEFT)
+			last_mouse_click = make_pair(event->button.x, event->button.y);
+	}
+	if(event->type == SDL_KEYDOWN)
+	{
+		//Zoom-in
+		if(event->key.keysym.sym == SDLK_UP)
+		{
+			complex<double> new_center = fractal->GetComplexFromPixel(
+				last_mouse_click.first, last_mouse_click.second);
+			fractal->ZoomView(new_center, zoom_scale);
+			fractal->setMaxIter( (int)((1.05)*fractal->getMaxIter()) );
+			//DEBUG
+			cout << "Zoom-in: " << fractal->getMaxIter() << endl;
+		}
+		//Zoom-out
+		else if(event->key.keysym.sym == SDLK_DOWN)
+		{
+			complex<double> new_center = fractal->GetComplexFromPixel(
+				width_display / 2, height_display / 2);
+			fractal->ZoomView(new_center, -zoom_scale);
+			int new_max_iter = (int)((0.95)*fractal->getMaxIter());
+			fractal->setMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
+			//DEBUG
+			cout << "Zoom-out: " << fractal->getMaxIter() << endl;
+		}
+		//Center
+		else if(event->key.keysym.sym == SDLK_c)
+		{
+			complex<double> new_center = fractal->GetComplexFromPixel(
+				last_mouse_click.first, last_mouse_click.second);
+			fractal->ZoomView(new_center, 0.0);
+		}
+		
+	}
+	//See http://www.sdltutorials.com/sdl-events for more complex examples
 }
 
 int main(int argc, char* argv[])

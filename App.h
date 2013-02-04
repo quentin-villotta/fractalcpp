@@ -53,9 +53,6 @@ class App
 		/// What to do given an event from the user
     	void Event(SDL_Event* Event);
 		
-		/// Recalculate the fractal after an event (e.g. zooming)
-    	void Loop();
-		
 		/// Display the fractal on the screen
     	void Render();
 		
