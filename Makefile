@@ -12,7 +12,7 @@ OBJECTS=App.o \
 CPPFLAGS=-Wall -g -I/opt/local/include
 
 # Linker flags
-LDFLAGS=-L/opt/local/lib -lSDL -lSDLmain -framework Cocoa
+LDFLAGS=-L/opt/local/lib -lSDL -lSDLmain -lboost_program_options-mt -framework Cocoa
 
 main: App.cpp
 	$(CC) $(CPPFLAGS) -c App.cpp \

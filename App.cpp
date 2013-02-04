@@ -1,33 +1,67 @@
 #include "App.h"
 
-App::App(int width, int height, int max_iter, 
-	complex<double> z_top_left, complex<double> z_bottom_right, double _zoom_scale)
+App::App()
 {
 	surf_display = NULL;
-	width_display = width;
-	height_display = height;
-	
-	running = true;
-	
-	zoom_scale = _zoom_scale;
-	
-	last_mouse_click = make_pair(width / 2, height / 2);
-	
-	//TODO: add argument to App:App to specify fractal type (mandelbrot, julia, ...)
-	fractal = new FractalMandelbrot(width_display, height_display, max_iter,
-		z_top_left, z_bottom_right);	
+	fractal = NULL;
+	running = true;	
 }
 
 bool App::Init()
 {
+	//Read conf file
+	namespace po = boost::program_options;
+    int _width_display, _height_display, _max_iter;
+    double _zoom_scale, _orbit_re, _orbit_im;
+    string _path_pictures, _type;
+	
+	po::options_description desc("Options");
+	desc.add_options()
+		("width", po::value<int>(&_width_display), "Screen width")
+		("height", po::value<int>(&_height_display), "Screen height")
+		("zoom_scale", po::value<double>(&_zoom_scale), "Zooming ratio")
+		("path_pictures", po::value<string>(&_path_pictures), 
+			"Directory to save pictures")
+		("type", po::value<string>(&_type), "Type of the fractal")
+		("max_iter", po::value<int>(&_max_iter), "Maximum number of iteration")
+		("orbit_re", po::value<double>(&_orbit_re), "Real part of orbit")
+		("orbit_im", po::value<double>(&_orbit_im), "Imag part of orbit");
+	
+    po::variables_map vm;
+    ifstream settings_file("fractalcpp.conf", ifstream::in);
+    po::store(po::parse_config_file(settings_file, desc, true), vm);
+    settings_file.close();
+    po::notify(vm); 
+
+	// Initialize SDL
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
         return false;
-	
-	surf_display = SDL_SetVideoMode(width_display, height_display, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	surf_display = SDL_SetVideoMode(_width_display, _height_display, 32,
+		 SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if(surf_display == NULL)
 		return false;
-
-	//Load other ressources here
+		
+	//Create new instance of a fractal
+	width_display = _width_display;
+	height_display = _height_display;
+	zoom_scale = _zoom_scale;
+	last_mouse_click = make_pair(width_display / 2, height_display / 2);
+	//TODO: handle path_pictures
+	if(_type == "mandelbrot")
+	{
+		//Mandelbrot centered
+		complex<double> z_top_left(-2.1, 1.2);
+		complex<double> z_bottom_right(0.6, -1.2);
+		fractal = new FractalMandelbrot(width_display, height_display,
+			 _max_iter, z_top_left, z_bottom_right);
+	}
+	else
+	{
+		complex<double> z_top_left(-2.0, 2.0);
+		complex<double> z_bottom_right(2.0, -2.0);
+		complex<double> orbit(_orbit_re, _orbit_im);
+		fractal = new FractalJulia(width_display, height_display, _max_iter, z_top_left, z_bottom_right, orbit);
+	}
 	
     return true;
 }
@@ -111,20 +145,12 @@ void App::Event(SDL_Event* event)
 
 int main(int argc, char* argv[])
 {
-	//TODO: parse conf file
-	
-	double zoom_scale = 0.20;
-	
-	//Mandelbrot centered
-	complex<double> z_top_left(-2.1, 1.2);
-	complex<double> z_bottom_right(0.6, -1.2);
-	
 	// Julia
 	//complex<double> z_top_left(-2.0, 2.0);
 	//complex<double> z_bottom_right(2.0, -2.0);
 	//orbit = complex<double>(0.285, 0.01)
 	
-	App app(800, 710, 50, z_top_left, z_bottom_right, zoom_scale);
+	App app;
 	
     return app.Execute();
 }

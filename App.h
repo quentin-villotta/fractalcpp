@@ -11,8 +11,17 @@
 #else
 #include "SDL.h"
 #endif
-
+	 
+#ifdef __GNUC__
+#include <boost/program_options.hpp>
+#else
+#include <program_options.hpp>
+#endif
+	 
 #include <utility>
+#include <iostream>
+#include <fstream>
+#include <string>
 	 
 #include "Fractal.h"
 #include "FractalMandelbrot.h"
@@ -41,12 +50,11 @@ class App
 		double zoom_scale;
 		
 	public:
-    	App(int, int, int, complex<double>, complex<double>, double);
+    	App();
 		
 		/// Run the application
     	int Execute();
 
-	public:
 		/// Initialize SDL and load ressources
     	bool Init();
 		

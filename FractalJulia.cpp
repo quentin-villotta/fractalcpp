@@ -10,7 +10,7 @@ FractalJulia::FractalJulia(int _width, int _height, int _max_iter,
 	//orbit = complex<double>(0.4, 0.6);
 	//orbit = complex<double>(0.8, 0.156);
 	UpdateIter();
-	UpdateColor( );
+	UpdateColor();
 }
 
 
