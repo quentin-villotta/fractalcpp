@@ -34,17 +34,17 @@ complex<double> Fractal::GetComplexFromPixel(int x, int y)
 	return z;
 }
 
-void Fractal::setMaxIter(int new_max_iter)
+void Fractal::SetMaxIter(int new_max_iter)
 {
 	max_iter = new_max_iter;
 }
 
-int Fractal::getMaxIter()
+int Fractal::GetMaxIter()
 {
 	return max_iter;
 }
 
-SDL_Surface* Fractal::getMatrixColor(void)
+SDL_Surface* Fractal::GetMatrixColor(void)
 {
 	return matrix_color;
 }

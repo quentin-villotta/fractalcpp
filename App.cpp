@@ -41,7 +41,7 @@ void App::Cleanup()
 
 void App::Render()
 {
-	SDL_BlitSurface(fractal->getMatrixColor(), NULL, surf_display, NULL);
+	SDL_BlitSurface(fractal->GetMatrixColor(), NULL, surf_display, NULL);
 	SDL_Flip(surf_display);
 }
 
@@ -82,9 +82,9 @@ void App::Event(SDL_Event* event)
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
 			fractal->ZoomView(new_center, zoom_scale);
-			fractal->setMaxIter( (int)((1.05)*fractal->getMaxIter()) );
+			fractal->SetMaxIter( (int)((1.05)*fractal->GetMaxIter()) );
 			//DEBUG
-			cout << "Zoom-in: " << fractal->getMaxIter() << endl;
+			cout << "Zoom-in: " << fractal->GetMaxIter() << endl;
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
@@ -92,10 +92,10 @@ void App::Event(SDL_Event* event)
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				width_display / 2, height_display / 2);
 			fractal->ZoomView(new_center, -zoom_scale);
-			int new_max_iter = (int)((0.95)*fractal->getMaxIter());
-			fractal->setMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
+			int new_max_iter = (int)((0.95)*fractal->GetMaxIter());
+			fractal->SetMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
 			//DEBUG
-			cout << "Zoom-out: " << fractal->getMaxIter() << endl;
+			cout << "Zoom-out: " << fractal->GetMaxIter() << endl;
 		}
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)

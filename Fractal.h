@@ -50,9 +50,9 @@ class Fractal
 		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
 		
-		SDL_Surface* getMatrixColor(void);
-		void setMaxIter(int);
-		int getMaxIter();
+		SDL_Surface* GetMatrixColor(void);
+		void SetMaxIter(int);
+		int GetMaxIter();
 
 		complex<double> GetComplexFromPixel(int, int);
 		
