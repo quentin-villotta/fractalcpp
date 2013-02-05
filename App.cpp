@@ -4,7 +4,13 @@ App::App()
 {
 	surf_display = NULL;
 	fractal = NULL;
-	running = true;	
+	running = true;
+	color_functions[0] = &color_black_blue;
+	color_functions[1] = &color_black_white;
+	color_functions[2] = &color_black_white_mod;
+	color_functions[3] = &color_black_white_smooth;
+	color_functions[4] = &color_time_escape_dark_rgb;	
+	id_cur_color = 0;			   
 }
 
 bool App::Init()
@@ -47,20 +53,21 @@ bool App::Init()
 	zoom_scale = _zoom_scale;
 	last_mouse_click = make_pair(width_display / 2, height_display / 2);
 	//TODO: handle path_pictures
+
 	if(_type == "mandelbrot")
 	{
 		//Mandelbrot centered
 		complex<double> z_top_left(-2.1, 1.2);
 		complex<double> z_bottom_right(0.6, -1.2);
 		fractal = new FractalMandelbrot(width_display, height_display,
-			 _max_iter, z_top_left, z_bottom_right);
+			 _max_iter, z_top_left, z_bottom_right, *color_functions[id_cur_color]);
 	}
 	else
 	{
 		complex<double> z_top_left(-2.0, 2.0);
 		complex<double> z_bottom_right(2.0, -2.0);
 		complex<double> orbit(_orbit_re, _orbit_im);
-		fractal = new FractalJulia(width_display, height_display, _max_iter, z_top_left, z_bottom_right, orbit);
+		fractal = new FractalJulia(width_display, height_display, _max_iter, z_top_left, z_bottom_right, orbit, *color_functions[id_cur_color]);
 	}
 	
     return true;
@@ -100,7 +107,7 @@ int App::Execute()
 }
 
 void App::Event(SDL_Event* event)
-{
+{		
     if(event->type == SDL_QUIT)
         running = false;
 	if(event->type == SDL_MOUSEBUTTONDOWN)
@@ -115,30 +122,40 @@ void App::Event(SDL_Event* event)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
-			fractal->ZoomView(new_center, zoom_scale);
+			fractal->ZoomView(new_center, zoom_scale, *color_functions[id_cur_color]);
 			fractal->SetMaxIter( (int)((1.05)*fractal->GetMaxIter()) );
-			//DEBUG
-			cout << "Zoom-in: " << fractal->GetMaxIter() << endl;
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				width_display / 2, height_display / 2);
-			fractal->ZoomView(new_center, -zoom_scale);
+			fractal->ZoomView(new_center, -zoom_scale, *color_functions[id_cur_color]);
 			int new_max_iter = (int)((0.95)*fractal->GetMaxIter());
 			fractal->SetMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
-			//DEBUG
-			cout << "Zoom-out: " << fractal->GetMaxIter() << endl;
 		}
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
-			fractal->ZoomView(new_center, 0.0);
+			fractal->ZoomView(new_center, 0.0, *color_functions[id_cur_color]);
 		}
-		
+		//Next color
+		else if(event->key.keysym.sym == SDLK_n)
+		{
+			id_cur_color++;
+			id_cur_color %= 5;
+			fractal->ChangeColor(*color_functions[id_cur_color]);
+		}
+		//Previous color
+		else if(event->key.keysym.sym == SDLK_p)
+		{
+			id_cur_color--;
+			id_cur_color = id_cur_color == -1 ? 4 : id_cur_color;
+			id_cur_color %= 5; // in C++ (-1) mod 5 equal -1 and not 4			
+			fractal->ChangeColor(*color_functions[id_cur_color]);
+		}
 	}
 	//See http://www.sdltutorials.com/sdl-events for more complex examples
 }

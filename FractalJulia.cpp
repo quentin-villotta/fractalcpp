@@ -1,7 +1,8 @@
 #include "FractalJulia.h" 
 
 FractalJulia::FractalJulia(int _width, int _height, int _max_iter,
-	complex<double> _z_top_left, complex<double> _z_bottom_right, complex<double> _orbit) :
+	complex<double> _z_top_left, complex<double> _z_bottom_right, 
+	complex<double> _orbit, class ColorFunction& funTocolor) :
 	Fractal(_width, _height, _max_iter, _z_top_left, _z_bottom_right)
 {
 	//orbit = complex<double>(0.72, 0.11);
@@ -10,7 +11,7 @@ FractalJulia::FractalJulia(int _width, int _height, int _max_iter,
 	//orbit = complex<double>(0.4, 0.6);
 	//orbit = complex<double>(0.8, 0.156);
 	UpdateIter();
-	UpdateColor();
+	UpdateColor( funTocolor );
 }
 
 

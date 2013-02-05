@@ -59,15 +59,15 @@ int Fractal::CalculateNbIterations(complex<double> &z, complex<double> orbit)
 }
 
 void Fractal::ChangeView(complex<double> z_top_left_new, 
-	complex<double> z_bottom_right_new)
+	complex<double> z_bottom_right_new, class ColorFunction& funTocolor)
 {
 	z_top_left = z_top_left_new;
 	z_bottom_right = z_bottom_right_new;
 	UpdateIter();
-	UpdateColor();
+	UpdateColor( funTocolor );
 }
 
-void Fractal::ZoomView(complex<double> center, double zoom_scale)
+void Fractal::ZoomView(complex<double> center, double zoom_scale, class ColorFunction& funTocolor)
 {
 	double cur_width = z_bottom_right.real() - z_top_left.real();
 	double cur_height = z_top_left.imag() - z_bottom_right.imag();
@@ -78,10 +78,15 @@ void Fractal::ZoomView(complex<double> center, double zoom_scale)
 	complex<double> translate_top_left(- new_width / 2, new_height / 2);
 	complex<double> translate_bottom_right(new_width / 2, - new_height / 2);	
 	
-	ChangeView(center + translate_top_left, center + translate_bottom_right);
+	ChangeView(center + translate_top_left, center + translate_bottom_right, funTocolor);
 }
 
-void Fractal::UpdateColor( )
+void Fractal::ChangeColor(class ColorFunction& funTocolor)
+{
+	UpdateColor( funTocolor );
+}
+
+void Fractal::UpdateColor( class ColorFunction& funTocolor )
 {
 	Uint8* tabColors = new Uint8[3];
 
@@ -89,8 +94,11 @@ void Fractal::UpdateColor( )
 	{
 		for(int y = 0; y < height; y++)
 		{
-			ColorTimeEscapeDarkRGB(x, y, tabColors);
+			//ColorTimeEscapeDarkRGB(x, y, tabColors);
+			int iteration = matrix_iter[y * width + x];
+			complex<double> lastTerm = matrix_lastTerm[y * width + x];
 
+			funTocolor.Value(iteration, max_iter, lastTerm, tabColors);
 			SurfaceHelper::PutPixelRGB(matrix_color, x, y, tabColors[0], tabColors[1], tabColors[2]);
 		}
 	}

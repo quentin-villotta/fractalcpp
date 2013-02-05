@@ -11,12 +11,8 @@
 #else
 #include "SDL.h"
 #endif
-	 
-#ifdef __GNUC__
+
 #include <boost/program_options.hpp>
-#else
-#include <program_options.hpp>
-#endif
 	 
 #include <utility>
 #include <iostream>
@@ -26,6 +22,12 @@
 #include "Fractal.h"
 #include "FractalMandelbrot.h"
 #include "FractalJulia.h"
+
+#include "ColorBlackBlue.h"
+#include "ColorBlackWhite.h"
+#include "ColorBlackWhiteMod.h"
+#include "ColorBlackWhiteSmooth.h"
+#include "ColorTimeEscapeDarkRGB.h"
 
 using namespace std;
  
@@ -48,6 +50,15 @@ class App
 		
 		/// Zoom scale
 		double zoom_scale;
+		
+		//Color functions
+		ColorBlackBlue color_black_blue;
+		ColorBlackWhite color_black_white;
+		ColorBlackWhiteMod color_black_white_mod;
+		ColorBlackWhiteSmooth color_black_white_smooth;
+		ColorTimeEscapeDarkRGB color_time_escape_dark_rgb;
+		ColorFunction* color_functions[5];
+		int id_cur_color;
 		
 	public:
     	App();

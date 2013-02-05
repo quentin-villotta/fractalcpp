@@ -19,6 +19,7 @@
 #endif
 
 #include "SurfaceHelper.h"
+#include "ColorFunction.h"
 
 using namespace std;
 
@@ -36,12 +37,7 @@ class Fractal
 		SDL_Surface* matrix_color;
 		
 		/// Colorize the fractal based on the number of iteration
-		void UpdateColor( );
-		void ColorTimeEscapeDarkRGB (int, int, Uint8*);
-		void ColorTimeEscapeBlueDarkRGB (int, int, Uint8*);
-		void ColorTimeEscapeBlackWhiteRGB (int, int, Uint8*);
-		void ColorTimeEscapeBlackWhiteBisRGB (int, int, Uint8*);
-		void ColorSmoothDarkRGB (int, int, Uint8*);
+		void UpdateColor(class ColorFunction&);
 
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
@@ -57,10 +53,14 @@ class Fractal
 		complex<double> GetComplexFromPixel(int, int);
 		
 		// Change the current view of the fractal by recalculating
-		void ChangeView(complex<double>, complex<double>);
+		void ChangeView(complex<double>, complex<double>, class ColorFunction&);
 		
-		void ZoomView(complex<double>, double);
+		// Zoom
+		void ZoomView(complex<double>, double, class ColorFunction&);
 
+		// Change color
+		void ChangeColor(class ColorFunction&);
+		
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
 		int CalculateNbIterations (complex<double>&, complex<double>);
 };

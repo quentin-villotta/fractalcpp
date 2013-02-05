@@ -5,7 +5,7 @@ CC=g++
 
 # Objects
 OBJECTS=App.o \
-	Fractal.o FractalMandelbrot.o FractalJulia.o Fractal_Color.o \
+	Fractal.o FractalMandelbrot.o FractalJulia.o \
 	SurfaceHelper.o
 
 # Compiler flags
@@ -16,7 +16,7 @@ LDFLAGS=-L/opt/local/lib -lSDL -lSDLmain -lboost_program_options-mt -framework C
 
 main: App.cpp
 	$(CC) $(CPPFLAGS) -c App.cpp \
-		Fractal.cpp FractalMandelbrot.cpp FractalJulia.cpp Fractal_Color.cpp \
+		Fractal.cpp FractalMandelbrot.cpp FractalJulia.cpp \
 		SurfaceHelper.cpp
 	$(CC) $(OBJECTS) $(CPPFLAGS) $(LDFLAGS) #-o fractalcpp
 
