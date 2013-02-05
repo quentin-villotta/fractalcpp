@@ -1,5 +1,6 @@
 #include "Fractal.h"
 
+// Fractal Class
 Fractal::Fractal(int _width, int _height, int _max_iter, 
 	complex<double> _z_top_left, complex<double> _z_bottom_right)
 {
