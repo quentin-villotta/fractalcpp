@@ -51,7 +51,7 @@ class App
 		/// Zoom scale
 		double zoom_scale;
 		
-		//Color functions
+		// Color functions
 		ColorBlackBlue color_black_blue;
 		ColorBlackWhite color_black_white;
 		ColorBlackWhiteMod color_black_white_mod;
@@ -59,6 +59,10 @@ class App
 		ColorTimeEscapeDarkRGB color_time_escape_dark_rgb;
 		ColorFunction* color_functions[5];
 		int id_cur_color;
+		
+		// Screenshots
+		int id_cur_screenshot;
+		string path_pictures;
 		
 	public:
     	App();

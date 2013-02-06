@@ -10,7 +10,8 @@ App::App()
 	color_functions[2] = &color_black_white_mod;
 	color_functions[3] = &color_black_white_smooth;
 	color_functions[4] = &color_time_escape_dark_rgb;	
-	id_cur_color = 0;			   
+	id_cur_color = 0;
+	id_cur_screenshot = 0;		   
 }
 
 bool App::Init()
@@ -52,7 +53,8 @@ bool App::Init()
 	height_display = _height_display;
 	zoom_scale = _zoom_scale;
 	last_mouse_click = make_pair(width_display / 2, height_display / 2);
-	//TODO: handle path_pictures
+	
+	path_pictures = _path_pictures;
 
 	if(_type == "mandelbrot")
 	{
@@ -155,6 +157,15 @@ void App::Event(SDL_Event* event)
 			id_cur_color = id_cur_color == -1 ? 4 : id_cur_color;
 			id_cur_color %= 5; // in C++ (-1) mod 5 equal -1 and not 4			
 			fractal->ChangeColor(*color_functions[id_cur_color]);
+		}
+		//Save image as file
+		else if(event->key.keysym.sym == SDLK_s)
+		{
+			stringstream path_to_file;
+			path_to_file << path_pictures << "screenshot_" 
+						 << id_cur_screenshot << ".bmp";
+			SDL_SaveBMP(surf_display, path_to_file.str().c_str());
+			id_cur_screenshot++;
 		}
 	}
 	//See http://www.sdltutorials.com/sdl-events for more complex examples

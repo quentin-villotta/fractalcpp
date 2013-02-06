@@ -1,4 +1,5 @@
-# Makefile for compiling on OS X with SDL installed via macports (install following ports : TODO)
+# Makefile for compiling on OS X with SDL and boost installed via macports
+# (install following ports : boost, libsdl)
 
 # Compiler
 CC=g++
