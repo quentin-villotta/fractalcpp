@@ -9,18 +9,16 @@ FractalMandelbrot::FractalMandelbrot(int _width, int _height, int _max_iter,
 	UpdateColor( funTocolor );
 }
 
-FractalMandelbrot::~FractalMandelbrot(void)
-{
-}
+FractalMandelbrot::~FractalMandelbrot(void) {}
 
 void FractalMandelbrot::UpdateIter()
 {
-	for(int x = 0; x < width; x++)
-		for(int y = 0; y < height; y++)
-		{
+	for(int x = 0; x < width; x++) {
+		for(int y = 0; y < height; y++) {
 			complex<double> z = GetComplexFromPixel(x, y);
 			
 			matrix_iter[y * width + x] = CalculateNbIterations (z, z);
 			matrix_lastTerm[y * width + x] = z;
 		}
+	}
 }

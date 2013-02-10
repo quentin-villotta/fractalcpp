@@ -36,20 +36,17 @@ class Fractal
 		complex<double>* matrix_lastTerm;
 		SDL_Surface* matrix_color;
 		
-		/// Colorize the fractal based on the number of iteration
-		void UpdateColor(class ColorFunction&);
-
-		/// Compute a new view of the fractal given a rectangle
-		virtual void UpdateIter() = 0;
 		
 	public:	
 		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
 		
+		/// Accessors and setters
 		SDL_Surface* GetMatrixColor(void);
 		void SetMaxIter(int);
 		int GetMaxIter();
 
+		/// Get the complex nomber from the pixel on the screen
 		complex<double> GetComplexFromPixel(int, int);
 		
 		// Change the current view of the fractal by recalculating
@@ -58,9 +55,12 @@ class Fractal
 		// Zoom
 		void ZoomView(complex<double>, double, class ColorFunction&);
 
-		// Change color
-		void ChangeColor(class ColorFunction&);
+		/// Colorize the fractal based on the number of iteration
+		void UpdateColor(class ColorFunction&);
 		
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
 		int CalculateNbIterations (complex<double>&, complex<double>);
+
+		/// Compute a new view of the fractal given a rectangle
+		virtual void UpdateIter() = 0;
 };

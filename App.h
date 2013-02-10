@@ -18,7 +18,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-	 
+#include <vector>
+
 #include "Fractal.h"
 #include "FractalMandelbrot.h"
 #include "FractalJulia.h"
@@ -27,7 +28,6 @@
 #include "ColorBlackWhite.h"
 #include "ColorBlackWhiteMod.h"
 #include "ColorBlackWhiteSmooth.h"
-#include "ColorTimeEscapeDarkRGB.h"
 
 using namespace std;
  
@@ -51,16 +51,11 @@ class App
 		/// Zoom scale
 		double zoom_scale;
 		
-		// Color functions
-		ColorBlackBlue color_black_blue;
-		ColorBlackWhite color_black_white;
-		ColorBlackWhiteMod color_black_white_mod;
-		ColorBlackWhiteSmooth color_black_white_smooth;
-		ColorTimeEscapeDarkRGB color_time_escape_dark_rgb;
-		ColorFunction* color_functions[5];
+		/// Color functions
+		vector<class ColorFunction*> color_functions;
 		int id_cur_color;
 		
-		// Screenshots
+		/// Screenshots
 		int id_cur_screenshot;
 		string path_pictures;
 		

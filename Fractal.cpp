@@ -1,6 +1,6 @@
 #include "Fractal.h"
 
-// Fractal Class
+/// Fractal Class
 Fractal::Fractal(int _width, int _height, int _max_iter, 
 	complex<double> _z_top_left, complex<double> _z_bottom_right)
 {
@@ -82,20 +82,13 @@ void Fractal::ZoomView(complex<double> center, double zoom_scale, class ColorFun
 	ChangeView(center + translate_top_left, center + translate_bottom_right, funTocolor);
 }
 
-void Fractal::ChangeColor(class ColorFunction& funTocolor)
-{
-	UpdateColor( funTocolor );
-}
 
 void Fractal::UpdateColor( class ColorFunction& funTocolor )
 {
 	Uint8* tabColors = new Uint8[3];
 
-	for(int x = 0; x < width; x++)
-	{
-		for(int y = 0; y < height; y++)
-		{
-			//ColorTimeEscapeDarkRGB(x, y, tabColors);
+	for(int x = 0; x < width; x++) {
+		for(int y = 0; y < height; y++) {
 			int iteration = matrix_iter[y * width + x];
 			complex<double> lastTerm = matrix_lastTerm[y * width + x];
 

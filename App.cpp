@@ -5,11 +5,18 @@ App::App()
 	surf_display = NULL;
 	fractal = NULL;
 	running = true;
-	color_functions[0] = &color_black_blue;
-	color_functions[1] = &color_black_white;
-	color_functions[2] = &color_black_white_mod;
-	color_functions[3] = &color_black_white_smooth;
-	color_functions[4] = &color_time_escape_dark_rgb;	
+
+	//TODO: ne faut-il pas delete ces pointeurs?
+	ColorBlackBlue* color_black_blue = new ColorBlackBlue();
+	ColorBlackWhite* color_black_white = new ColorBlackWhite();
+	ColorBlackWhiteMod* color_black_white_mod = new ColorBlackWhiteMod();
+	ColorBlackWhiteSmooth* color_black_white_smooth = new ColorBlackWhiteSmooth();
+
+	color_functions.push_back(color_black_blue);
+	color_functions.push_back(color_black_white);
+	color_functions.push_back(color_black_white_mod);
+	color_functions.push_back(color_black_white_smooth);
+
 	id_cur_color = 0;
 	id_cur_screenshot = 0;		   
 }
@@ -39,6 +46,17 @@ bool App::Init()
     po::store(po::parse_config_file(settings_file, desc, true), vm);
     settings_file.close();
     po::notify(vm); 
+	
+	/* // Pour moi, car toujours pas installé Boost
+	int _width_display = 800;
+	int _height_display = 711;
+	double _zoom_scale = 0.20;
+	string _type = "julia";
+	int _max_iter = 50;
+	double _orbit_re = 0.285;
+	double _orbit_im = 0.01;
+	string _path_pictures = "./pictures/";
+	*/
 
 	// Initialize SDL
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -66,6 +84,7 @@ bool App::Init()
 	}
 	else
 	{
+		// Julia centered
 		complex<double> z_top_left(-2.0, 2.0);
 		complex<double> z_bottom_right(2.0, -2.0);
 		complex<double> orbit(_orbit_re, _orbit_im);
@@ -78,7 +97,13 @@ bool App::Init()
 void App::Cleanup()
 {
     SDL_FreeSurface(surf_display);
+	
 	delete fractal;
+	
+	for(size_t i = 0; i < color_functions.size(); i++)
+		delete color_functions[i];
+	color_functions.clear();
+	
     SDL_Quit();
 }
 
@@ -112,6 +137,7 @@ void App::Event(SDL_Event* event)
 {		
     if(event->type == SDL_QUIT)
         running = false;
+
 	if(event->type == SDL_MOUSEBUTTONDOWN)
 	{
 		if(event->button.button == SDL_BUTTON_LEFT)
@@ -124,17 +150,20 @@ void App::Event(SDL_Event* event)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
-			fractal->ZoomView(new_center, zoom_scale, *color_functions[id_cur_color]);
+			
 			fractal->SetMaxIter( (int)((1.05)*fractal->GetMaxIter()) );
+			fractal->ZoomView(new_center, zoom_scale, *color_functions[id_cur_color]);
+			
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				width_display / 2, height_display / 2);
-			fractal->ZoomView(new_center, -zoom_scale, *color_functions[id_cur_color]);
 			int new_max_iter = (int)((0.95)*fractal->GetMaxIter());
+
 			fractal->SetMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
+			fractal->ZoomView(new_center, -zoom_scale, *color_functions[id_cur_color]);
 		}
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)
@@ -147,16 +176,16 @@ void App::Event(SDL_Event* event)
 		else if(event->key.keysym.sym == SDLK_n)
 		{
 			id_cur_color++;
-			id_cur_color %= 5;
-			fractal->ChangeColor(*color_functions[id_cur_color]);
+			id_cur_color = (id_cur_color + color_functions.size()) % color_functions.size();
+			fractal->UpdateColor(*color_functions[id_cur_color]);
 		}
 		//Previous color
 		else if(event->key.keysym.sym == SDLK_p)
 		{
 			id_cur_color--;
-			id_cur_color = id_cur_color == -1 ? 4 : id_cur_color;
-			id_cur_color %= 5; // in C++ (-1) mod 5 equal -1 and not 4			
-			fractal->ChangeColor(*color_functions[id_cur_color]);
+			id_cur_color = (id_cur_color + color_functions.size()) % color_functions.size();
+
+			fractal->UpdateColor(*color_functions[id_cur_color]);
 		}
 		//Save image as file
 		else if(event->key.keysym.sym == SDLK_s)
@@ -173,12 +202,7 @@ void App::Event(SDL_Event* event)
 
 int main(int argc, char* argv[])
 {
-	// Julia
-	//complex<double> z_top_left(-2.0, 2.0);
-	//complex<double> z_bottom_right(2.0, -2.0);
-	//orbit = complex<double>(0.285, 0.01)
-	
+	// Launching the app to plot Fractals
 	App app;
-	
     return app.Execute();
 }
