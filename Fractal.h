@@ -34,6 +34,7 @@ class Fractal
 		int width, height;
 		int max_iter;
 		
+		/// 
 		int* matrix_iter;
 		complex<double>* matrix_lastTerm;
 		SDL_Surface* matrix_color;
@@ -61,7 +62,7 @@ class Fractal
 		void UpdateColor(class ColorFunction&);
 		
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
-		int CalculateNbIterations (complex<double>&, complex<double>);
+		int CalculateNbIterations (complex<double>, complex<double>);
 
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;

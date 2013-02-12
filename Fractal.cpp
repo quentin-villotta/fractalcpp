@@ -50,13 +50,15 @@ SDL_Surface* Fractal::GetMatrixColor(void)
 	return matrix_color;
 }
 
-int Fractal::CalculateNbIterations(complex<double> &z, complex<double> orbit)
+int Fractal::CalculateNbIterations(complex<double> _z, complex<double> orbit)
 {
-	int iterations;
-	for(iterations = 0; iterations < max_iter && norm(z) < 4.0; iterations++) {
+	int i;
+	complex<double> z = _z;
+	
+	for(i = 0; i < max_iter && norm(z) < 4.0; i++)
 		z = z * z + orbit;
-	}
-	return iterations;
+	
+	return i;
 }
 
 void Fractal::ChangeView(complex<double> z_top_left_new, 
