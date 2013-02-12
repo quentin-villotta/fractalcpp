@@ -13,6 +13,7 @@
 #endif
 
 #include <boost/program_options.hpp>
+#include <boost/timer.hpp>
 	 
 #include <utility>
 #include <iostream>

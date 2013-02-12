@@ -6,7 +6,7 @@ App::App()
 	fractal = NULL;
 	running = true;
 
-	//TODO: ne faut-il pas delete ces pointeurs?
+	//TODO: ne faut-il pas delete ces pointeurs? Si en effet
 	ColorBlackBlue* color_black_blue = new ColorBlackBlue();
 	ColorBlackWhite* color_black_white = new ColorBlackWhite();
 	ColorBlackWhiteMod* color_black_white_mod = new ColorBlackWhiteMod();
@@ -152,8 +152,13 @@ void App::Event(SDL_Event* event)
 				last_mouse_click.first, last_mouse_click.second);
 			
 			fractal->SetMaxIter( (int)((1.05)*fractal->GetMaxIter()) );
-			fractal->ZoomView(new_center, zoom_scale, *color_functions[id_cur_color]);
 			
+			boost::timer t; // start timing
+			
+			fractal->ZoomView(new_center, zoom_scale,
+				*color_functions[id_cur_color]);
+			
+			cout << "Time to zoom-in: " << t.elapsed() << "s" << endl;
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
@@ -163,7 +168,13 @@ void App::Event(SDL_Event* event)
 			int new_max_iter = (int)((0.95)*fractal->GetMaxIter());
 
 			fractal->SetMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
-			fractal->ZoomView(new_center, -zoom_scale, *color_functions[id_cur_color]);
+			
+			boost::timer t; // start timing
+			
+			fractal->ZoomView(new_center, -zoom_scale,
+				*color_functions[id_cur_color]);
+			
+			cout << "Time to zoom-out: " << t.elapsed() << "s" << endl;
 		}
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)

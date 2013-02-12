@@ -18,6 +18,8 @@
 #include "SDL.h"
 #endif
 
+#include <omp.h> // OpenMP 
+
 #include "SurfaceHelper.h"
 #include "ColorFunction.h"
 

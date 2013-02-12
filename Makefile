@@ -10,10 +10,10 @@ OBJECTS=App.o \
 	SurfaceHelper.o
 
 # Compiler flags
-CPPFLAGS=-Wall -g -I/opt/local/include
+CPPFLAGS=-Wall -g -I/opt/local/include -fopenmp
 
 # Linker flags
-LDFLAGS=-L/opt/local/lib -lSDL -lSDLmain -lboost_program_options-mt -framework Cocoa
+LDFLAGS=-L/opt/local/lib -lSDL -lSDLmain -lboost_program_options-mt -lboost_timer-mt -framework Cocoa
 
 main: App.cpp
 	$(CC) $(CPPFLAGS) -c App.cpp \
