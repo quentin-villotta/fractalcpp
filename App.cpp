@@ -122,9 +122,10 @@ int App::Execute()
 
     while(running)
 	{
-        while(SDL_PollEvent(&event))
+        
+		while(SDL_PollEvent(&event))
             Event(&event);
-
+		
         Render();
     }
 
@@ -153,12 +154,8 @@ void App::Event(SDL_Event* event)
 			
 			fractal->SetMaxIter( (int)((1.05)*fractal->GetMaxIter()) );
 			
-			boost::timer t; // start timing
-			
 			fractal->ZoomView(new_center, zoom_scale,
-				*color_functions[id_cur_color]);
-			
-			cout << "Time to zoom-in: " << t.elapsed() << "s" << endl;
+				*color_functions[id_cur_color]);			
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
@@ -169,12 +166,8 @@ void App::Event(SDL_Event* event)
 
 			fractal->SetMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
 			
-			boost::timer t; // start timing
-			
 			fractal->ZoomView(new_center, -zoom_scale,
 				*color_functions[id_cur_color]);
-			
-			cout << "Time to zoom-out: " << t.elapsed() << "s" << endl;
 		}
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)

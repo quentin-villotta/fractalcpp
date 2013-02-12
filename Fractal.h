@@ -18,6 +18,8 @@
 #include "SDL.h"
 #endif
 
+#include <boost/timer.hpp>
+
 #include <omp.h> // OpenMP 
 
 #include "SurfaceHelper.h"
