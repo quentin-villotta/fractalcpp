@@ -13,15 +13,13 @@ FractalMandelbrot::~FractalMandelbrot(void) {}
 
 void FractalMandelbrot::UpdateIter()
 {
-	//int x, y;
-	complex<double> z;
-	
 	#pragma omp parallel for
 	for(int x = 0; x < width; x++)
 	{
 		///*DEBUG*/printf("Thread id: %d\n", omp_get_thread_num());
-		for(int y = 0; y < height; y++) {
-			z = GetComplexFromPixel(x, y);
+		for(int y = 0; y < height; y++)
+		{
+			complex<double> z = GetComplexFromPixel(x, y);
 			
 			matrix_iter[y * width + x] = CalculateNbIterations (z, z);
 			matrix_lastTerm[y * width + x] = z;
