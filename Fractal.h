@@ -65,4 +65,8 @@ class Fractal
 		
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
+		
+		/// Read-only accessors
+		const complex<double>& _z_top_left() const {return z_top_left;}
+		const complex<double>& _z_bottom_right() const {return z_bottom_right;}
 };

@@ -81,6 +81,10 @@ bool App::Init()
 		//Mandelbrot centered
 		complex<double> z_top_left(-2.1, 1.2);
 		complex<double> z_bottom_right(0.6, -1.2);
+		
+		z_top_left_history.push(z_top_left);
+		z_bottom_right_history.push(z_bottom_right);
+			
 		fractal = new FractalMandelbrot(width_display, height_display,
 			 _max_iter, z_top_left, z_bottom_right, *color_functions[id_cur_color]);
 	}
@@ -89,6 +93,10 @@ bool App::Init()
 		// Julia centered
 		complex<double> z_top_left(-2.0, 2.0);
 		complex<double> z_bottom_right(2.0, -2.0);
+		
+		z_top_left_history.push(z_top_left);
+		z_bottom_right_history.push(z_bottom_right);
+		
 		complex<double> orbit(_orbit_re, _orbit_im);
 		fractal = new FractalJulia(width_display, height_display, _max_iter, z_top_left, z_bottom_right, orbit, *color_functions[id_cur_color]);
 	}
@@ -153,18 +161,24 @@ void App::Event(SDL_Event* event)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
-						
+			
+			z_top_left_history.push(fractal->_z_top_left());
+			z_bottom_right_history.push(fractal->_z_bottom_right());
+			
 			fractal->ZoomView(new_center, zoom_scale,
 				*color_functions[id_cur_color]);			
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
 		{
-			complex<double> new_center = fractal->GetComplexFromPixel(
-				width_display / 2, height_display / 2);
+			fractal->ChangeView(z_top_left_history.top(),
+				 				z_bottom_right_history.top(),
+								*color_functions[id_cur_color]);
 			
-			fractal->ZoomView(new_center, -zoom_scale,
-				*color_functions[id_cur_color]);
+			if(z_top_left_history.size() > 1)
+				z_top_left_history.pop();
+			if(z_bottom_right_history.size() > 1)
+				z_bottom_right_history.pop();			
 		}
 		//Center
 		else if(event->key.keysym.sym == SDLK_c)

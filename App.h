@@ -18,6 +18,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <stack>
 
 #include "Fractal.h"
 #include "FractalMandelbrot.h"
@@ -49,7 +50,7 @@ class App
 		
 		/// Zoom scale
 		double zoom_scale;
-		
+				
 		/// Color functions
 		vector<class ColorFunction*> color_functions;
 		int id_cur_color;
@@ -75,4 +76,8 @@ class App
 		
 		/// Close SDL and free ressources
     	void Cleanup();	
+		
+		/// Zoom history
+		stack<complex<double> > z_top_left_history;
+		stack<complex<double> > z_bottom_right_history;
 };
