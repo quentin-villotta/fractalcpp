@@ -147,9 +147,7 @@ void App::Event(SDL_Event* event)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				last_mouse_click.first, last_mouse_click.second);
-			
-			fractal->SetMaxIter( (int)((1.05)*fractal->GetMaxIter()) );
-			
+						
 			fractal->ZoomView(new_center, zoom_scale,
 				*color_functions[id_cur_color]);			
 		}
@@ -158,9 +156,6 @@ void App::Event(SDL_Event* event)
 		{
 			complex<double> new_center = fractal->GetComplexFromPixel(
 				width_display / 2, height_display / 2);
-			int new_max_iter = (int)((0.95)*fractal->GetMaxIter());
-
-			fractal->SetMaxIter( new_max_iter <= 50 ? 50 : new_max_iter );
 			
 			fractal->ZoomView(new_center, -zoom_scale,
 				*color_functions[id_cur_color]);
