@@ -63,9 +63,6 @@ class Fractal
 		/// Colorize the fractal based on the number of iteration
 		void UpdateColor(class ColorFunction&);
 		
-		/// Compute the number of iteration required for a serie starting at z0 with orbit c
-		int CalculateNbIterations (complex<double>&, complex<double>);
-
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
 };

@@ -27,14 +27,6 @@ Fractal::~Fractal(void)
 	SDL_FreeSurface(matrix_color);
 }
 
-complex<double> Fractal::GetComplexFromPixel(int x, int y)
-{
-	complex<double> z(z_top_left.real() + x * (z_bottom_right.real() -
-		z_top_left.real()) / (width - 1), z_top_left.imag() + y *
-		(z_bottom_right.imag() - z_top_left.imag()) / (height - 1));
-	return z;
-}
-
 void Fractal::SetMaxIter(int new_max_iter)
 {
 	max_iter = new_max_iter;
@@ -50,13 +42,12 @@ SDL_Surface* Fractal::GetMatrixColor(void)
 	return matrix_color;
 }
 
-int Fractal::CalculateNbIterations(complex<double>& z, complex<double> orbit)
+complex<double> Fractal::GetComplexFromPixel(int x, int y)
 {
-	int i;
-	for(i = 0; i < max_iter && norm(z) < 4.0; i++)
-		z = z * z + orbit;
-	
-	return i;
+       complex<double> z(z_top_left.real() + x * (z_bottom_right.real() -
+               z_top_left.real()) / (width - 1), z_top_left.imag() + y *
+               (z_bottom_right.imag() - z_top_left.imag()) / (height - 1));
+       return z;
 }
 
 void Fractal::ChangeView(complex<double> z_top_left_new, 
