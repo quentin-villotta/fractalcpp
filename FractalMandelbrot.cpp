@@ -40,7 +40,7 @@ void FractalMandelbrot::UpdateIter()
 			complex<double> z_init = z;
 			int i = 0;
 			
-			for(; i <= max_iter && norm(z) < 4.0; i++)
+			for(; i < max_iter && norm(z) < 4.0; i++)
 				z = z * z + z_init;
 						
 			matrix_iter[y * width + x] = i;
