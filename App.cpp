@@ -62,7 +62,13 @@ bool App::Init()
 	if(surf_display == NULL)
 		return false;
 	
-	//Create new instance of a fractal
+	// Set the window title
+	stringstream title;
+	title << "Fractal++ | Type : " << _type << " | Resolution : ";
+	title << _width_display << "x" << _height_display << " | Maximum iteration : " << _max_iter;
+	SDL_WM_SetCaption(title.str().c_str(), NULL);
+	
+	// Create new instance of a fractal
 	width_display = _width_display;
 	height_display = _height_display;
 	zoom_scale = _zoom_scale;
