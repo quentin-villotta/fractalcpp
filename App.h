@@ -12,12 +12,10 @@
 #include "SDL.h"
 #endif
 
-#include <boost/program_options.hpp>
-#include <boost/timer.hpp>
-	 
 #include <utility>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 

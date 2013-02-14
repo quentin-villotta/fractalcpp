@@ -6,7 +6,6 @@ App::App()
 	fractal = NULL;
 	running = true;
 
-	//TODO: ne faut-il pas delete ces pointeurs? Si en effet
 	ColorBlackBlue* color_black_blue = new ColorBlackBlue();
 	ColorBlackWhite* color_black_white = new ColorBlackWhite();
 	ColorBlackWhiteMod* color_black_white_mod = new ColorBlackWhiteMod();
@@ -23,40 +22,37 @@ App::App()
 
 bool App::Init()
 {
-	//Read conf file
-	namespace po = boost::program_options;
+	// Variables
     int _width_display, _height_display, _max_iter;
     double _zoom_scale, _orbit_re, _orbit_im;
     string _path_pictures, _type;
 	
-	po::options_description desc("Options");
-	desc.add_options()
-		("width", po::value<int>(&_width_display), "Screen width")
-		("height", po::value<int>(&_height_display), "Screen height")
-		("zoom_scale", po::value<double>(&_zoom_scale), "Zooming ratio")
-		("path_pictures", po::value<string>(&_path_pictures), 
-			"Directory to save pictures")
-		("type", po::value<string>(&_type), "Type of the fractal")
-		("max_iter", po::value<int>(&_max_iter), "Maximum number of iteration")
-		("orbit_re", po::value<double>(&_orbit_re), "Real part of orbit")
-		("orbit_im", po::value<double>(&_orbit_im), "Imag part of orbit");
-	
-    po::variables_map vm;
-    ifstream settings_file("fractalcpp.conf", ifstream::in);
-    po::store(po::parse_config_file(settings_file, desc, true), vm);
-    settings_file.close();
-    po::notify(vm); 
-	
-	/* // Pour moi, car toujours pas installé Boost
-	int _width_display = 800;
-	int _height_display = 711;
-	double _zoom_scale = 0.20;
-	string _type = "julia";
-	int _max_iter = 50;
-	double _orbit_re = 0.285;
-	double _orbit_im = 0.01;
-	string _path_pictures = "./pictures/";
-	*/
+	// Read conf file
+	ifstream file ("fractalcpp.conf");
+	if (file) {
+		string ligne;
+		while (getline(file, ligne)) {
+			int posPoint1= ligne.find('=', 0);
+			int posPoint2= ligne.find('=', posPoint1+1);
+			string nameParam = ligne.substr(0, posPoint1);
+
+			string valParam = ligne.substr(posPoint1+1,posPoint2-(posPoint1+1));
+			int posPoint3= valParam.find(' ', 0);
+			valParam = valParam.substr(0, posPoint3);
+			istringstream iss (valParam);
+
+			if (nameParam == "width") { iss >> _width_display; }
+			if (nameParam == "height") { iss >> _height_display; }
+			if (nameParam == "zoom_scale") { iss >> _zoom_scale; }
+			if (nameParam == "type") { iss >> _type; }
+			if (nameParam == "path_pictures") { iss >> _path_pictures; }
+			if (nameParam == "max_iter") { iss >> _max_iter; }
+			if (nameParam == "orbit_re") { iss >> _orbit_re; }
+			if (nameParam == "orbit_im") { iss >> _orbit_im; }
+		}
+		file.close();
+	}
+	else { return false; }
 
 	// Initialize SDL
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -65,7 +61,7 @@ bool App::Init()
 		 SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if(surf_display == NULL)
 		return false;
-		
+	
 	//Create new instance of a fractal
 	width_display = _width_display;
 	height_display = _height_display;

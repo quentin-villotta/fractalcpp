@@ -18,9 +18,9 @@
 #include "SDL.h"
 #endif
 
-#include <boost/timer.hpp>
-
+#ifdef __GNUC__
 #include <omp.h> // OpenMP 
+#endif
 
 #include "SurfaceHelper.h"
 #include "ColorFunction.h"
@@ -64,7 +64,7 @@ class Fractal
 		void UpdateColor(class ColorFunction&);
 		
 		/// Compute the number of iteration required for a serie starting at z0 with orbit c
-		int CalculateNbIterations (complex<double>, complex<double>);
+		int CalculateNbIterations (complex<double>&, complex<double>);
 
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
