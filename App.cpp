@@ -62,17 +62,12 @@ bool App::Init()
 	if(surf_display == NULL)
 		return false;
 	
-	// Set the window title
-	stringstream title;
-	title << "Fractal++ | Type : " << _type << " | Resolution : ";
-	title << _width_display << "x" << _height_display << " | Maximum iteration : " << _max_iter;
-	SDL_WM_SetCaption(title.str().c_str(), NULL);
-	
 	// Create new instance of a fractal
 	width_display = _width_display;
 	height_display = _height_display;
 	zoom_scale = _zoom_scale;
 	last_mouse_click = make_pair(width_display / 2, height_display / 2);
+	type = _type;
 	
 	path_pictures = _path_pictures;
 
@@ -119,6 +114,14 @@ void App::Cleanup()
 
 void App::Render()
 {
+	// Update window title
+	stringstream title;
+	title << "Fractal++ | Type : " << type << " | Resolution : ";
+	title << width_display << "x" << height_display << 
+	" | Maximum iteration : " << fractal->GetMaxIter();
+	SDL_WM_SetCaption(title.str().c_str(), NULL);
+	
+	// Update display
 	SDL_BlitSurface(fractal->GetMatrixColor(), NULL, surf_display, NULL);
 	SDL_Flip(surf_display);
 }
@@ -165,12 +168,20 @@ void App::Event(SDL_Event* event)
 			z_top_left_history.push(fractal->_z_top_left());
 			z_bottom_right_history.push(fractal->_z_bottom_right());
 			
+			int max_iter_cur = fractal->GetMaxIter();
+			fractal->SetMaxIter((int)(max_iter_cur * (1.0 + zoom_scale)));
+			
 			fractal->ZoomView(new_center, zoom_scale,
 				*color_functions[id_cur_color]);			
 		}
 		//Zoom-out
 		else if(event->key.keysym.sym == SDLK_DOWN)
 		{
+			int max_iter_cur = fractal->GetMaxIter();
+			int max_iter_new = (int)(max_iter_cur * (1.0 - zoom_scale));
+			fractal->SetMaxIter(max_iter_new <= fractal->GetMaxIterDefault() ?
+								fractal->GetMaxIterDefault() : max_iter_new);
+			
 			fractal->ChangeView(z_top_left_history.top(),
 				 				z_bottom_right_history.top(),
 								*color_functions[id_cur_color]);

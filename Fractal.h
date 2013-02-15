@@ -35,6 +35,7 @@ class Fractal
 
 		int width, height;
 		int max_iter;
+		int max_iter_default;
 		
 		/// 
 		int* matrix_iter;
@@ -50,6 +51,7 @@ class Fractal
 		SDL_Surface* GetMatrixColor(void);
 		void SetMaxIter(int);
 		int GetMaxIter();
+		int GetMaxIterDefault();
 
 		/// Get the complex nomber from the pixel on the screen
 		complex<double> GetComplexFromPixel(int, int);

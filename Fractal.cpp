@@ -8,6 +8,7 @@ Fractal::Fractal(int _width, int _height, int _max_iter,
 	height = _height;
 	
 	max_iter = _max_iter;
+	max_iter_default = _max_iter;
 	
 	z_top_left = _z_top_left;
 	z_bottom_right = _z_bottom_right;
@@ -35,6 +36,11 @@ void Fractal::SetMaxIter(int new_max_iter)
 int Fractal::GetMaxIter()
 {
 	return max_iter;
+}
+
+int Fractal::GetMaxIterDefault()
+{
+	return max_iter_default;
 }
 
 SDL_Surface* Fractal::GetMatrixColor(void)

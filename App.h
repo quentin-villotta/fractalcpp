@@ -59,6 +59,9 @@ class App
 		int id_cur_screenshot;
 		string path_pictures;
 		
+		/// Fractal type
+		string type;
+		
 	public:
     	App();
 		
