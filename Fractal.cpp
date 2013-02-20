@@ -89,12 +89,11 @@ void Fractal::ZoomView(complex<double> center, double zoom_scale, class ColorFun
 
 int Fractal::CalculateNbIterations(complex<double> &z, complex<double> orbit)
 {
-	int iterations;
+	int i;
 	// Calculating the number of iteration done until the sequence diverges
-	for (iterations = 0; iterations < max_iter && norm(z) < 4.0; iterations++) {
+	for (i = 0; i < max_iter && norm(z) < 4.0; i++)
 		z = z * z + orbit;
-	}
-	return iterations;
+	return i;
 }
 
 void Fractal::UpdateColor( class ColorFunction& funTocolor )
@@ -102,8 +101,10 @@ void Fractal::UpdateColor( class ColorFunction& funTocolor )
 	// Allocating memory for the 3 dimension array (RGB color code)
 	Uint8* tabColors = new Uint8[3];
 
-	for(int x = 0; x < width; x++) {
-		for(int y = 0; y < height; y++) {
+	for(int x = 0; x < width; x++)
+	{
+		for(int y = 0; y < height; y++)
+		{
 			// Retrieval data from the pixel point (x,y)
 			int iteration = matrix_iter[y * width + x];
 			complex<double> lastTerm = matrix_last_term[y * width + x];

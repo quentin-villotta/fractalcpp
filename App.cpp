@@ -18,78 +18,83 @@ App::App()
 	color_functions.push_back(color_black_white_mod);
 	color_functions.push_back(color_black_white_smooth);
 
-	// Id flags initialization
+	// Index flags initialization
 	id_cur_color = 0;
 	id_cur_screenshot = 0;		   
 }
 
 bool App::Init()
 {
-	// Variables
+	// Variables to store info from conf file
     int _width_display, _height_display, _max_iter;
     double _zoom_scale, _orbit_re, _orbit_im;
     string _path_pictures, _type;
 	
 	// Reading conf file
 	ifstream file ("fractalcpp.conf");
-	if (file) {
+	if(file)
+	{
 		string ligne;
 		
-		while (getline(file, ligne)) {
+		while(getline(file, ligne))
+		{
 			// Splitting the line with the "=" symbol
-			int posPoint1= ligne.find('=', 0);
-			int posPoint2= ligne.find('=', posPoint1+1);
-			string nameParam = ligne.substr(0, posPoint1);
+			int pos_point1= ligne.find('=', 0);
+			int pos_point2= ligne.find('=', pos_point1+1);
+			string name_param = ligne.substr(0, pos_point1);
 
 			// If there is a comment, we don't save it
-			string valParam = ligne.substr(posPoint1+1,posPoint2-(posPoint1+1));
-			int posPoint3= valParam.find(' ', 0);
-			valParam = valParam.substr(0, posPoint3);
-			istringstream iss (valParam);
+			string value_param = ligne.substr(pos_point1+1,pos_point2-(pos_point1+1));
+			int pos_point3= value_param.find(' ', 0);
+			value_param = value_param.substr(0, pos_point3);
+			istringstream iss (value_param);
 
 			// Checking if the parameters are found in the file
-			if (nameParam == "width") { iss >> _width_display; }
-			if (nameParam == "height") { iss >> _height_display; }
-			if (nameParam == "zoom_scale") { iss >> _zoom_scale; }
-			if (nameParam == "type") { iss >> _type; }
-			if (nameParam == "path_pictures") { iss >> _path_pictures; }
-			if (nameParam == "max_iter") { iss >> _max_iter; }
-			if (nameParam == "orbit_re") { iss >> _orbit_re; }
-			if (nameParam == "orbit_im") { iss >> _orbit_im; }
+			if (name_param == "width") { iss >> _width_display; }
+			if (name_param == "height") { iss >> _height_display; }
+			if (name_param == "zoom_scale") { iss >> _zoom_scale; }
+			if (name_param == "type") { iss >> _type; }
+			if (name_param == "path_pictures") { iss >> _path_pictures; }
+			if (name_param == "max_iter") { iss >> _max_iter; }
+			if (name_param == "orbit_re") { iss >> _orbit_re; }
+			if (name_param == "orbit_im") { iss >> _orbit_im; }
 		}
 		file.close();
 	}
-	else { return false; }
+	// Error reading conf file
+	else
+		return false;
 
 	// Initialize SDL
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
         return false;
 	surf_display = SDL_SetVideoMode(_width_display, _height_display, 32,
-		 SDL_HWSURFACE | SDL_DOUBLEBUF);
+									SDL_HWSURFACE | SDL_DOUBLEBUF);				
 	if(surf_display == NULL)
 		return false;
 	
-	// Create new instance of a fractal
+	// Set parameters from the conf file
 	width_display = _width_display;
 	height_display = _height_display;
 	zoom_scale = _zoom_scale;
 	last_mouse_click = make_pair(width_display / 2, height_display / 2);
 	type = _type;
-	
 	path_pictures = _path_pictures;
+	
 
+	// Create new instance of a fractal
 	if(_type == "mandelbrot")
 	{
 		// Mandelbrot centered
 		complex<double> z_top_left(-2.1, 1.2);
 		complex<double> z_bottom_right(0.6, -1.2);
 		
-		// Saving the fist window delimitation
+		// Add default position to the stack history
 		z_top_left_history.push(z_top_left);
 		z_bottom_right_history.push(z_bottom_right);
 			
-		fractal = new FractalMandelbrot(width_display, height_display,
-			 _max_iter, z_top_left, z_bottom_right, *color_functions[id_cur_color]);
+		fractal = new FractalMandelbrot(width_display, height_display,_max_iter,
+			z_top_left, z_bottom_right, *color_functions[id_cur_color]);
 	}
 	else
 	{
@@ -97,12 +102,13 @@ bool App::Init()
 		complex<double> z_top_left(-2.0, 2.0);
 		complex<double> z_bottom_right(2.0, -2.0);
 		
-		// Saving the fist window delimitation
+		// Add default position to the stack history
 		z_top_left_history.push(z_top_left);
 		z_bottom_right_history.push(z_bottom_right);
 		
 		complex<double> orbit(_orbit_re, _orbit_im);
-		fractal = new FractalJulia(width_display, height_display, _max_iter, z_top_left, z_bottom_right, orbit, *color_functions[id_cur_color]);
+		fractal = new FractalJulia(width_display, height_display, _max_iter, 
+			z_top_left, z_bottom_right, orbit, *color_functions[id_cur_color]);
 	}
 	
     return true;

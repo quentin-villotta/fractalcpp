@@ -91,7 +91,7 @@ class App
 		/// Close SDL and free ressources
     	void Cleanup();	
 		
-		/// Zoom history
+		/// Zoom stack history
 		stack<complex<double> > z_top_left_history;
 		stack<complex<double> > z_bottom_right_history;
 };

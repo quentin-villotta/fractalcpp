@@ -26,11 +26,11 @@ using namespace std;
 
 class ColorFunction 
 {
-public:
-	/// Constructor and destructor
-	ColorFunction(void) {};
-	virtual ~ColorFunction(void) {};
+	public:
+		/// Constructor and destructor
+		ColorFunction(void) {};
+		virtual ~ColorFunction(void) {};
 
-	/// Function calculating the RGB color code
-	virtual void Value (int, int, complex<double>, Uint8*)=0;
+		/// Function calculating the RGB color code
+		virtual void Value (int, int, complex<double>, Uint8*)=0;
 };

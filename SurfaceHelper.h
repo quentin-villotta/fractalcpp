@@ -1,7 +1,7 @@
 /**
  * \class SurfaceHelper
  *
- * \brief This class ...
+ * \brief This class contains helper for building an SDL_Surface pixel by pixel.
  *
  */
 #pragma once
