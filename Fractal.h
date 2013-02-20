@@ -18,10 +18,6 @@
 #include "SDL.h"
 #endif
 
-#ifdef __GNUC__
-#include <omp.h> // OpenMP 
-#endif
-
 #include "SurfaceHelper.h"
 #include "ColorFunction.h"
 
@@ -30,20 +26,30 @@ using namespace std;
 class Fractal
 {
 	protected:
+		/// Parameters defining the window bounds
 		complex<double> z_top_left, z_bottom_right;
+
+		/// Parameters defining the window resolution
+		int width, height;
+
+		/// Initial and current number of maximum iteration
+		int max_iter_default;
+		int max_iter;
+		
+		/// Complex value of the orbit in order to generate the set
 		complex<double> orbit;
 
-		int width, height;
-		int max_iter;
-		int max_iter_default;
-		
-		/// 
+		/// Matrix storing, for each point, the number of iterations
 		int* matrix_iter;
-		complex<double>* matrix_lastTerm;
+		
+		/// Matrix storing, for each point, the value of the last term
+		complex<double>* matrix_last_term;
+		
+		/// Matrix storing, for each point, the color code
 		SDL_Surface* matrix_color;
 		
-		
 	public:	
+		/// Constructor and destructor
 		Fractal(int, int, int, complex<double>, complex<double>);
 		~Fractal(void);
 		
@@ -56,15 +62,18 @@ class Fractal
 		/// Get the complex nomber from the pixel on the screen
 		complex<double> GetComplexFromPixel(int, int);
 		
-		// Change the current view of the fractal by recalculating
+		/// Change the current view of the fractal by recalculating
 		void ChangeView(complex<double>, complex<double>, class ColorFunction&);
 		
-		// Zoom
+		/// Zoom
 		void ZoomView(complex<double>, double, class ColorFunction&);
 
 		/// Colorize the fractal based on the number of iteration
 		void UpdateColor(class ColorFunction&);
-		
+
+		/// Compute the number of iteration required for a sequence starting at z0 with orbit c
+		int CalculateNbIterations (complex<double>&, complex<double>);
+
 		/// Compute a new view of the fractal given a rectangle
 		virtual void UpdateIter() = 0;
 		

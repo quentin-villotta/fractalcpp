@@ -19,17 +19,12 @@ void FractalJulia::UpdateIter()
 	{
 		for(int y = 0; y < height; y++)
 		{
-			/*complex<double> z(z_top_left.real() + x * (z_bottom_right.real() -
-				z_top_left.real()) / (width - 1), z_top_left.imag() + y *
-				(z_bottom_right.imag() - z_top_left.imag()) / (height - 1));*/
+			// For each complex point in the window
 			complex<double> z = GetComplexFromPixel(x, y);
 			
-			int i = 0;			
-			for(; i < max_iter && norm(z) < 4.0; i++)
-				z = z * z + orbit;
-			
-			matrix_iter[y * width + x] = i;
-			matrix_lastTerm[y * width + x] = z;
+			// Storing in matrices the number of iterations and the value of the last term
+			matrix_iter[y * width + x] = CalculateNbIterations(z, orbit);
+			matrix_last_term[y * width + x] = z;
 		}
 	}
 }

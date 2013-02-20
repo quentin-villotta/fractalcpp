@@ -9,14 +9,19 @@ using namespace std;
 class ColorBlackWhiteSmooth : public ColorFunction 
 {
 public:
+	/// Constructor and destructor
 	ColorBlackWhiteSmooth(void) {};
 	~ColorBlackWhiteSmooth(void) {};
 
+	/// Function calculating the RGB color code
 	void Value (int iterations, int max_iter, complex<double> lastTerm,
 				Uint8* tabColors)
 	{
+		// We calculate a smooth color code which is function of the number
+		// of iteration done and the value of the last term in the sequence
 		double color = (iterations - log(log(abs(lastTerm) )))/max_iter;
 
+		// If the complex point belongs to the set
 		if (iterations == max_iter)
 		{
 			tabColors[0] = (Uint8) (0);

@@ -1,7 +1,16 @@
 /**
+ * \title	Fractal++
+ * \brief	The project's aim is to generate and explore fractal sets like Mandelbrot and Julia sets.
+ *
+ * \authors	Alexandre Crayssac - Rémi Gerboud
+ * \date	February 22, 2013
+ * \version	3.2
+ */
+
+/**
  * \class App
  *
- * \brief This class handles the main machinery of the application.
+ * \brief	This class handles the main machinery of the application.
  *
  */
 #pragma once
@@ -34,6 +43,7 @@ using namespace std;
 class App
 {
 	private:
+		/// Flag indicating if the application is still running
     	bool running;
 		
 		/// Screen surface
@@ -63,6 +73,7 @@ class App
 		string type;
 		
 	public:
+		/// Constructor
     	App();
 		
 		/// Run the application
