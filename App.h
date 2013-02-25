@@ -42,56 +42,56 @@ using namespace std;
  
 class App
 {
-	private:
-		/// Flag indicating if the application is still running
-    	bool running;
+private:
+	/// Flag indicating if the application is still running
+	bool running;
 		
-		/// Screen surface
-    	SDL_Surface* surf_display;
+	/// Screen surface
+	SDL_Surface* surf_display;
 		
-		/// Resolution of the window
-		int width_display, height_display;
+	/// Resolution of the window
+	int width_display, height_display;
 		
-		/// Current view of the fractal
-		Fractal* fractal;
+	/// Current view of the fractal
+	Fractal* fractal;
 		
-		/// Last position of mouse click
-		pair<int, int> last_mouse_click;
+	/// Last position of mouse click
+	pair<int, int> last_mouse_click;
 		
-		/// Zoom scale
-		double zoom_scale;
+	/// Zoom scale
+	double zoom_scale;
 				
-		/// Color functions
-		vector<class ColorFunction*> color_functions;
-		int id_cur_color;
+	/// Color functions
+	vector<class ColorFunction*> color_functions;
+	int id_cur_color;
 		
-		/// Screenshots
-		int id_cur_screenshot;
-		string path_pictures;
+	/// Screenshots
+	int id_cur_screenshot;
+	string path_pictures;
 		
-		/// Fractal type
-		string type;
+	/// Fractal type
+	string type;
 		
-	public:
-		/// Constructor
-    	App();
+public:
+	/// Constructor
+	App();
 		
-		/// Run the application
-    	int Execute();
+	/// Run the application
+	int Execute();
 
-		/// Initialize SDL and load ressources
-    	bool Init();
+	/// Initialize SDL and load ressources
+	bool Init();
 		
-		/// What to do given an event from the user
-    	void Event(SDL_Event* Event);
+	/// What to do given an event from the user
+	void Event(SDL_Event* Event);
 		
-		/// Display the fractal on the screen
-    	void Render();
+	/// Display the fractal on the screen
+	void Render();
 		
-		/// Close SDL and free ressources
-    	void Cleanup();	
+	/// Close SDL and free ressources
+	void Cleanup();	
 		
-		/// Zoom stack history
-		stack<complex<double> > z_top_left_history;
-		stack<complex<double> > z_bottom_right_history;
+	/// Zoom stack history
+	stack<complex<double> > z_top_left_history;
+	stack<complex<double> > z_bottom_right_history;
 };

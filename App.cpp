@@ -26,9 +26,9 @@ App::App()
 bool App::Init()
 {
 	// Variables to store info from conf file
-    int _width_display, _height_display, _max_iter;
-    double _zoom_scale, _orbit_re, _orbit_im;
-    string _path_pictures, _type;
+	int _width_display, _height_display, _max_iter;
+	double _zoom_scale, _orbit_re, _orbit_im;
+	string _path_pictures, _type;
 	
 	// Reading conf file
 	ifstream file ("fractalcpp.conf");
@@ -66,8 +66,8 @@ bool App::Init()
 		return false;
 
 	// Initialize SDL
-    if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
-        return false;
+	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		return false;
 	surf_display = SDL_SetVideoMode(_width_display, _height_display, 32,
 									SDL_HWSURFACE | SDL_DOUBLEBUF);				
 	if(surf_display == NULL)
@@ -111,12 +111,12 @@ bool App::Init()
 			z_top_left, z_bottom_right, orbit, *color_functions[id_cur_color]);
 	}
 	
-    return true;
+	return true;
 }
 
 void App::Cleanup()
 {
-    SDL_FreeSurface(surf_display);
+	SDL_FreeSurface(surf_display);
 	
 	delete fractal;
 	
@@ -126,7 +126,7 @@ void App::Cleanup()
 	color_functions.clear();
 	
 	// Free the SDL
-    SDL_Quit();
+	SDL_Quit();
 }
 
 void App::Render()
@@ -145,25 +145,25 @@ void App::Render()
 
 int App::Execute()
 {
-    if(Init() == false)
+	if(Init() == false)
 		return -1;
 
-    SDL_Event event;
+	SDL_Event event;
 
 	// While the application is running
-    while(running)
+	while(running)
 	{
-        // Managing the events
+		// Managing the events
 		while(SDL_PollEvent(&event))
-            Event(&event);
+			Event(&event);
 		
-        Render();
-    }
+		Render();
+	}
 
 	// Free the memory
-    Cleanup();
+	Cleanup();
 
-    return 0;
+	return 0;
 }
 
 void App::Event(SDL_Event* event)
@@ -248,5 +248,5 @@ int main(int argc, char* argv[])
 {
 	// Launching the app to plot Fractals
 	App app;
-    return app.Execute();
+	return app.Execute();
 }

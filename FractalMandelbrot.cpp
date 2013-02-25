@@ -7,7 +7,6 @@ FractalMandelbrot::FractalMandelbrot(int _width, int _height, int _max_iter,
 {
 	UpdateIter();
 	UpdateColor( funTocolor );
-	
 }
 
 FractalMandelbrot::~FractalMandelbrot(void) {}
@@ -27,6 +26,4 @@ void FractalMandelbrot::UpdateIter()
 			matrix_last_term[y * width + x] = z;
 		}
 	}
-
-
 }
